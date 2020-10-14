@@ -13,8 +13,13 @@ Timezone tz;
 Grafana grafana;
 
 long long frame = 0;
+long long tick = 0;
 unsigned long t = 0;
 float fps = 0;
+
+uint8_t r = 96;
+uint8_t g = 0;
+uint8_t b = 96;
 
 void setup()
 {
@@ -28,7 +33,7 @@ void setup()
   panel.flipDMABuffer();
   panel.clearScreen();
   panel.setCursor(1, 6);
-  panel.setTextColor(panel.color565(64, 0, 0));
+  panel.setTextColor(panel.color565(r, g, b));
   panel.print("Connecting");
   panel.showDMABuffer();
 
@@ -43,7 +48,7 @@ void setup()
   panel.flipDMABuffer();
   panel.clearScreen();
   panel.setCursor(1, 6);
-  panel.setTextColor(panel.color565(64, 0, 0));
+  panel.setTextColor(panel.color565(r, g, b));
   panel.print("Synchronizing NTP");
   panel.showDMABuffer();
 
@@ -56,7 +61,7 @@ void setup()
   panel.flipDMABuffer();
   panel.clearScreen();
   panel.setCursor(1, 6);
-  panel.setTextColor(panel.color565(64, 0, 0));
+  panel.setTextColor(panel.color565(r, g, b));
   panel.print("Loading data");
   panel.showDMABuffer();
 
@@ -75,13 +80,15 @@ void loop()
   grafana.update();
   panel.flipDMABuffer();
   panel.clearScreen();
-  panel.setTextColor(panel.color565(64, 0, 0));
+  panel.setTextColor(panel.color565(r, g, b));
   panel.setCursor(1, 6);
   panel.printf("%s", tz.dateTime("H:i:s").c_str());
   panel.setCursor(1, 13);
   panel.printf("%.2f C  %.2f %%", grafana.outdoorTemperature, grafana.outdoorHumidity);
   panel.setCursor(1, 31);
   panel.printf("%.2f fps", fps);
+  panel.drawPixelRGB888(63, tick % 32, 16, 0, 0);
   panel.showDMABuffer();
   frame++;
+  tick++;
 }
