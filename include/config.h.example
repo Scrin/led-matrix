@@ -1,0 +1,4 @@
+#define WIFI_SSID "HomeNet"
+#define WIFI_PASSWORD "hunter1"
+#define HOSTNAME "LedMatrix"
+#define GRAFANA_BASE "https://some.grafana.server/api/datasources/proxy/5/query"
